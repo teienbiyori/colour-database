@@ -30,6 +30,21 @@ app.post('/add', (req, res) => {
   .catch(err => {res.status(500); console.log(err.message)})
 })
 
+app.put("/update/:id", (req, res)=>{
+  const {id} = req.params;
+  const {isDone} = req.body;
+  TaskModel.findByIdAndUpdate({_id: id}, {isDone: isDone})
+  .then(result => res.json(result))
+  .catch(err => console.log(err.message))
+})
+
+app.delete("/update/:id", (req, res) => {
+  const {id} = req.params;
+  TaskModel.findByIdAndDelete({_id: id})
+  .then(result => res.json(result))
+  .catch(err => console.log(err))
+})
+
 app.get('/', (req, res) => {
   res.send('Welcome to my API!');
 });
